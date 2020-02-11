@@ -1,5 +1,5 @@
 Исаев Василий, тестовое задание 2 для ParseqLab
-
+![Java CI](https://github.com/Vasiliy566/annotator/workflows/Java%20CI/badge.svg)
 ## План работы
 - [x] Реализация http-сервиса
 - [x] Реализация запросов и обработки ошибок
