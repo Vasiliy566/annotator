@@ -11,24 +11,15 @@ fun main(args: Array<String>) {
     val annotations = VcfHandler.readDatabase("vcfdb/42demo.tsv")
     val server = embeddedServer(Netty, port = 8080) {
         routing {
-            get("/") {
-                call.respondText("Hello World!", ContentType.Text.Plain)
-            }
-            get("/demo") {
-                call.respondText("HELLO WORLD!")
-            }
-            get("/demoArgs") {
-                call.respondText(call.parameters.get("vcf")!!)
-            }
             // example : http://127.0.0.1:8080/getAnnotation?vcf=chr42+9411197+9411200+C
-            get("/getAnnotation"){
-                var raw = call.parameters.get("vcf")!!
+            get("/annotation"){
+                val raw = call.parameters.get("vcf")!!
                 println(raw)
 
-                var parsedData = raw.split(" ")
+                val parsedData = raw.split(" ")
                 println(parsedData)
 
-                var unAnnotated = VariatnInfo(parsedData[0],
+                val unAnnotated = VariatnInfo(parsedData[0],
                     parsedData[1].toInt(),
                     parsedData[2].toInt(),
                     parsedData[3])
