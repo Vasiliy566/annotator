@@ -5,52 +5,39 @@ import kotlin.test.*
 class ApplicationTest {
     @Test
     fun testVariantInfo() {
-       val ref = VariatnInfo(
+        val ref = VariantInfo(
             "chr42",
             9411197,
             9411200,
             "C"
         )
-        val refEq = VariatnInfo(
+        val refEq = VariantInfo(
             "chr42",
             9411197,
             9411200,
             "C"
         )
-        val refDiff1 = VariatnInfo(
+        val refDiff1 = VariantInfo(
             "chr41", // diff
             9411197,
             9411200,
             "C"
         )
-        val refDiff2 = VariatnInfo(
+        val refDiff2 = VariantInfo(
             "chr42",
             9411196, // diff
             9411200,
             "C"
         )
-        val refDiff3 = VariatnInfo(
-            "chr42",
-            9411197,
-            9411201, // diff
-            "C"
-        )
-        val refDiff4 = VariatnInfo(
-            "chr42",
-            9411197,
-            9411200,
-            "T"      // diff
-        )
         assertEquals(ref, refEq)
-        assertEquals(ref.equals(refDiff1), false)
-        assertEquals(ref.equals(refDiff2), false)
-        assertEquals(ref.equals(refDiff3), false)
-        assertEquals(ref.equals(refDiff4), false)
+        assertEquals(ref == refDiff1, false)
+        assertEquals(ref == refDiff2, false)
     }
+
     @Test
     fun testSingleVariant() {
-        val ref =  SingleVariant(
-            VariatnInfo(
+        val ref = SingleVariant(
+            VariantInfo(
                 "chr42",
                 9411197,
                 9411200,
@@ -58,8 +45,8 @@ class ApplicationTest {
             ),
             "rs376129767"
         )
-        val refEq =  SingleVariant(
-            VariatnInfo(
+        val refEq = SingleVariant(
+            VariantInfo(
                 "chr42",
                 9411197,
                 9411200,
@@ -67,8 +54,8 @@ class ApplicationTest {
             ),
             "rs376129767"
         )
-        val refDiff1 =  SingleVariant(
-            VariatnInfo(
+        val refDiff1 = SingleVariant(
+            VariantInfo(
                 "chr41", // diff
                 9411197,
                 9411200,
@@ -76,8 +63,8 @@ class ApplicationTest {
             ),
             "rs376129767"
         )
-        val refDiff2 =  SingleVariant(
-            VariatnInfo(
+        val refDiff2 = SingleVariant(
+            VariantInfo(
                 "chr42",
                 9411197,
                 9411200,
@@ -86,9 +73,10 @@ class ApplicationTest {
             "rs376129768" // diff
         )
         assertEquals(ref, refEq)
-        assertEquals(ref.equals(refDiff1), false)
-        assertEquals(ref.equals(refDiff2), false)
+        assertEquals(ref == refDiff1, false)
+        assertEquals(ref == refDiff2, false)
     }
+
     @Test
     fun testVcfHandlerInputParse() {
         val rawTestData = arrayOf(
@@ -101,7 +89,7 @@ class ApplicationTest {
 
         val parsedTestData = arrayOf(
             SingleVariant(
-                VariatnInfo(
+                VariantInfo(
                     "chr42",
                     9411197,
                     9411200,
@@ -111,7 +99,7 @@ class ApplicationTest {
             ),
 
             SingleVariant(
-                VariatnInfo(
+                VariantInfo(
                     "chr42",
                     9411201,
                     9411204,
@@ -121,7 +109,7 @@ class ApplicationTest {
             ),
 
             SingleVariant(
-                VariatnInfo(
+                VariantInfo(
                     "chr42",
                     9411205,
                     9411208,
@@ -130,7 +118,7 @@ class ApplicationTest {
                 "rs1321780858"
             ),
             SingleVariant(
-                VariatnInfo(
+                VariantInfo(
                     "chr42",
                     9411209,
                     9411212,
@@ -139,7 +127,7 @@ class ApplicationTest {
                 "rs1316595271"
             ),
             SingleVariant(
-                VariatnInfo(
+                VariantInfo(
                     "chr42",
                     9411213,
                     9411216,
@@ -148,17 +136,7 @@ class ApplicationTest {
                 "rs1393520178"
             )
         )
-
         for (i in 0..4)
             assertEquals(VcfHandler.inputParse(rawTestData[i]), parsedTestData[i])
-
     }
-
 }
-
-/*chr42	9411197	9411200	C	rs376129767
-chr42	9411201	9411204	T	rs1370531971
-chr42	9411205	9411208	G	rs1321780858
-chr42	9411209	9411212	G	rs1316595271
-chr42	9411213	9411216	C	rs1393520178
-*/
