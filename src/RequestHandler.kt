@@ -3,15 +3,15 @@ import io.ktor.http.Parameters
 
 fun getAnnotation(params: Parameters, annotations: Map<VariantInfo, String> ):String {
     if (params.isEmpty()){
-        return Constants.getEmptyParameters()
+        return Constants.EMPTY_PARAMETERS
     }else if (!params.contains("vcf")){
-        return Constants.getVcfNotExist()
+        return Constants.VCF_PARAMETER_NOT_EXIST
     }
     else {
         val raw = params["vcf"]!!
         val parsedData = raw.split(" ")
         if (parsedData.size != 4){
-            return Constants.getWrongFormat()
+            return Constants.WRONG_FIELDS_AMOUNT
         }
         else {
 
@@ -24,7 +24,7 @@ fun getAnnotation(params: Parameters, annotations: Map<VariantInfo, String> ):St
                 )
                 annotations[unAnnotated].toString()
             } catch(e: java.lang.NumberFormatException){
-                Constants.getWrongVcfParam()
+                Constants.WRONG_VCF_PARAMETERS
             }
 
         }
