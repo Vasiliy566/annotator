@@ -3,7 +3,8 @@ package com.annotator
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ApplicationTest {
+class
+ApplicationTest {
 
     @Test
     fun testVariantInfo() {
