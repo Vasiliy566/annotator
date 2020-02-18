@@ -1,11 +1,9 @@
 package com.annotator
-
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class
 ApplicationTest {
-
     @Test
     fun testVariantInfo() {
         val ref = VariantInfo(
@@ -143,3 +141,4 @@ ApplicationTest {
             assertEquals(VcfHandler.inputParse(rawTestData[i]), parsedTestData[i])
     }
 }
+
