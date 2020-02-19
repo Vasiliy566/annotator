@@ -79,16 +79,8 @@ class ApplicationTest {
 
     @Test
     fun testVcfHandlerInputParse() {
-        val rawTestData = arrayOf(
-            "chr42\t9411197\t9411200\tC\trs376129767",
-            "chr42\t9411201\t9411204\tT\trs1370531971",
-            "chr42\t9411205\t9411208\tG\trs1321780858",
-            "chr42\t9411209\t9411212\tG\trs1316595271",
-            "chr42\t9411213\t9411216\tC\trs1393520178"
-        )
-
-        val parsedTestData = arrayOf(
-            SingleVariant(
+        assertEquals(
+            VcfHandler.inputParse("chr42\t9411197\t9411200\tC\trs376129767"), SingleVariant(
                 VariantInfo(
                     "chr42",
                     9411197,
@@ -96,47 +88,7 @@ class ApplicationTest {
                     "C"
                 ),
                 "rs376129767"
-            ),
-
-            SingleVariant(
-                VariantInfo(
-                    "chr42",
-                    9411201,
-                    9411204,
-                    "T"
-                ),
-                "rs1370531971"
-            ),
-
-            SingleVariant(
-                VariantInfo(
-                    "chr42",
-                    9411205,
-                    9411208,
-                    "G"
-                ),
-                "rs1321780858"
-            ),
-            SingleVariant(
-                VariantInfo(
-                    "chr42",
-                    9411209,
-                    9411212,
-                    "G"
-                ),
-                "rs1316595271"
-            ),
-            SingleVariant(
-                VariantInfo(
-                    "chr42",
-                    9411213,
-                    9411216,
-                    "C"
-                ),
-                "rs1393520178"
             )
         )
-        for (i in 0..4)
-            assertEquals(VcfHandler.inputParse(rawTestData[i]), parsedTestData[i])
     }
 }
