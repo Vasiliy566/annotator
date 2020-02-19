@@ -7,8 +7,6 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
 fun main() {
-    val annotations = VcfHandler.readDatabase("vcfdb/42.tsv")
-
     val server = embeddedServer(Netty, port = 8080) {
         routing {
             // example :
