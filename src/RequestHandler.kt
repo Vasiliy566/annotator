@@ -37,7 +37,10 @@ fun getAnnotation(params: Parameters, annotations: Map<VariantInfo, String> ):St
                     parsedData[2].toInt(),
                     parsedData[3]
                 )
-                annotations[unAnnotated].toString()
+                if (annotations.containsKey(unAnnotated))
+                    annotations[unAnnotated].toString()
+                else ""
+
             } catch(e: java.lang.NumberFormatException){
                 Constants.WRONG_VCF_PARAMETERS
             }
@@ -58,13 +61,12 @@ fun getFastAnnotation(params: Parameters):String{
         return if (parsedData.size != 4){
             Constants.WRONG_FIELDS_AMOUNT
         } else {
-            try {
+            return try {
                 val res = execCmd("tabix vcfdb/42.tsv.gz ${parsedData[0]}:${parsedData[1].toInt()}-${parsedData[2].toInt()}")
-                return res?.split("\t")?.last() ?: "Variant not exist"
+                res?.split("\t")?.last() ?: "Variant not exist"
             } catch(e: java.lang.NumberFormatException){
                 Constants.WRONG_VCF_PARAMETERS
             }
-
         }
     }
 }
