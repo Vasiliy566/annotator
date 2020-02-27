@@ -1,8 +1,9 @@
 package com.annotator
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-import kotlin.test.*
-
-class ApplicationTest {
+class
+ApplicationTest {
     @Test
     fun testVariantInfo() {
         val ref = VariantInfo(
@@ -92,3 +93,4 @@ class ApplicationTest {
         )
     }
 }
+
