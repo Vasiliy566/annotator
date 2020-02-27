@@ -29,19 +29,5 @@ class VcfHandler {
                 parsedData[4]
             )
         }
-
-        fun readDatabase(filename: String): Map<VariantInfo, String> {
-            val annotations = mutableMapOf<VariantInfo, String>()
-            val inputStream: InputStream = File(filename).inputStream()
-
-            inputStream.bufferedReader().useLines { lines ->
-                lines.forEach {
-                    val variant = inputParse(it)
-                    annotations[variant.info] = variant.id
-                }
-            }
-
-            return annotations
-        }
     }
 }

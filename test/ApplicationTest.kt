@@ -1,6 +1,5 @@
 package com.annotator
 
-import io.ktor.http.Parameters
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -144,37 +143,4 @@ ApplicationTest {
             assertEquals(VcfHandler.inputParse(rawTestData[i]), parsedTestData[i])
     }
 
-    @Test
-    fun testIndexVsOriginPerf() {
-        /* do VcfHandler.readDatabase ony one time when program starts,
-        so don't need to consider this in performance results */
-
-        val rawTestData = arrayOf(
-            "chr42\t9411197\t9411200\tC",
-            "chr42\t9411201\t9411204\tT",
-            "chr42\t9440030\t9440033\tT",
-            "chr42\t9455430\t9455433\tC",
-            "chr42\t9503129\t9503132\tC"
-        )
-        val res = arrayOfNulls<String>(rawTestData.size)
-
-        val startFast = System.currentTimeMillis()
-        rawTestData.indices.forEach { i ->
-            res[i] = getFastAnnotation(Parameters.build { append("vcf", rawTestData[i].replace('\t', ' ')) })
-        }
-        val endFast = System.currentTimeMillis() - startFast
-        print("fast duration $endFast\n performance ${endFast / rawTestData.size} ms to find one \n")
-
-        val annotations = VcfHandler.readDatabase("vcfdb/42.tsv")
-        val startRef = System.currentTimeMillis()
-        rawTestData.indices.forEach { i ->
-            assertEquals(
-                res[i],
-                getAnnotation(Parameters.build { append("vcf", rawTestData[i].replace('\t', ' ')) }, annotations) + "\n"
-            )
-        }
-        val endRef = System.currentTimeMillis() - startRef
-        print("default duration $endRef\n performance ${endRef / rawTestData.size} ms in one operation \n")
-
-    }
 }
