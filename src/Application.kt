@@ -5,26 +5,22 @@ import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
-fun main(args: Array<String>) {
-
-    val annotations = VcfHandler.readDatabase("vcfdb/42demo.tsv")
+fun main() {
+    val annotations = VcfHandler.readDatabase("vcfdb/42.tsv")
     val server = embeddedServer(Netty, port = 8080) {
         routing {
-            // example : http://127.0.0.1:8080/getAnnotation?vcf=chr42+9411197+9411200+C
+            // example :
+            // http://127.0.0.1:8080/annotation?vcf=chr42+9411197+9411200+C
             get("/annotation"){
-                val raw = call.parameters.get("vcf")!!
-                println(raw)
-
-                val parsedData = raw.split(" ")
-                println(parsedData)
-
-                val unAnnotated = VariatnInfo(parsedData[0],
-                    parsedData[1].toInt(),
-                    parsedData[2].toInt(),
-                    parsedData[3])
-                call.respondText(annotations.get(unAnnotated).toString())
+                call.respondText(getAnnotation(call.parameters, annotations))
+            }
+            // http://127.0.0.1:8080/fastAnnotation?vcf=chr42+9411197+9411200+C
+            get("/fastAnnotation"){
+                call.respondText(getFastAnnotation(call.parameters))
             }
         }
     }
-    server.start(wait = true)
+    if (execCmd("command -v tabix") == "")
+        print("tabix not found, install it befor server running")
+    else server.start(wait = true)
 }
